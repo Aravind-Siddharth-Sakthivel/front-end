@@ -1,41 +1,27 @@
 <template>
-  <div>
-    <template v-if="!$route.meta.allowAnonymous">
-      <v-app id="inspire">
-        <div class="app-container">
-          <toolbar @toggleNavigationBar="drawer = !drawer"/>
-          <navigation :toggle="drawer"/>
-          <v-content>
-            <breadcrumbs />
-            <router-view/>
-            <page-footer />
-          </v-content>
-        </div>
-      </v-app>
-    </template>
-    <template v-else>
-      <transition>
-        <keep-alive>
-          <router-view></router-view>
-        </keep-alive>
-      </transition>
-    </template>
-  </div>
+  <v-app>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+    />
+    <!-- <v-main> -->
+    <HelloWorld />
+    <!-- </v-main> -->
+  </v-app>
 </template>
 
 <script>
-export default {
-  name: 'App',
-  data() {
-    return {
-      drawer: true
-    }
-  }
-}
-</script>
+import HelloWorld from "./components/HelloWorld";
 
-<style>
-  .v-btn:hover:before{
-    color: transparent !important;
-  }
-</style>
+export default {
+  name: "App",
+
+  components: {
+    HelloWorld,
+  },
+
+  data: () => ({
+    //
+  }),
+};
+</script>
