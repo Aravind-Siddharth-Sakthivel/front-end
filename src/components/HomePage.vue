@@ -226,7 +226,7 @@
                   :headers="headers"
                   :search="search"
                   @click:row="changeSong"
-                  :items="desserts"
+                  :items="songs"
                   hide-default-footer
                   class="songsList"
                 ></v-data-table>
@@ -630,7 +630,7 @@ export default {
       { text: "ARTIST", align: "center", value: "artist" },
       { text: "TIME", align: "center", value: "duration" },
     ],
-    desserts: [],
+    songs: [],
     headersAlbum: [{ text: "ALBUM", align: "left", value: "album" }],
     albums: [],
     tab: null,
@@ -682,7 +682,7 @@ export default {
   methods: {
     initialize() {
       axios.get("http://localhost:3000/songs").then((response) => {
-        this.desserts = response.data;
+        this.songs = response.data;
       });
       axios.get("http://localhost:3000/albums").then((response) => {
         this.albums = response.data;
@@ -692,7 +692,7 @@ export default {
       axios
         .get(`http://localhost:3000/albums/${item.album}`)
         .then((response) => {
-          this.desserts = response.data;
+          this.songs = response.data;
         });
     },
     searchSong(e) {
