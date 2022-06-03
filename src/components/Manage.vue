@@ -33,7 +33,7 @@
           <div class="overflow-y-scroll tableHeight my-1">
             <v-data-table
               :headers="headers"
-              :items="desserts"
+              :items="songs"
               hide-default-footer
               class="songsList"
               sort-by="calories"
@@ -73,6 +73,12 @@
                               <v-text-field
                                 v-model="editedItem.url"
                                 label="Song Link"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="12" sm="12" md="12">
+                              <v-text-field
+                                v-model="editedItem.album"
+                                label="Album"
                               ></v-text-field>
                             </v-col>
                             <v-col cols="12" sm="12" md="12">
@@ -204,15 +210,18 @@ export default {
       { text: "TITLE", align: "center", value: "name" },
       { text: "ARTIST", align: "center", value: "artist" },
       { text: "TIME", align: "center", value: "duration" },
+      { text: "ALBUM", align: "center", value: "album" },
+      // { text: "URL", align: " d-none", value: "url" },
       { text: "Actions", align: "center", value: "actions", sortable: false },
     ],
-    desserts: [],
+    songs: [],
     editedIndex: -1,
     editedItem: {
       name: "",
       artist: "",
       url: "",
       image: "",
+      album: "",
       duration: "",
     },
     defaultItem: {
@@ -220,6 +229,7 @@ export default {
       artist: "",
       url: "",
       image: "",
+      album: "",
       duration: "",
     },
     dialog: false,
@@ -247,7 +257,7 @@ export default {
   methods: {
     initialize() {
       axios.get("http://localhost:3000/songs").then((response) => {
-        this.desserts = response.data;
+        this.songs = response.data;
       });
     },
     onFileChange(e) {
@@ -255,24 +265,31 @@ export default {
       this.selectedFile = selectedFile;
     },
     ditItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
+      this.editedIndex = this.songs.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
 
     deleteItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
+      this.editedIndex = this.songs.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialogDelete = true;
+    },
+
+    editItem(item) {
+      this.editedIndex = this.songs.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialog = true;
+      // this.dialogDelete = true;
     },
 
     deleteItemConfirm() {
       axios
         .delete(
-          `http://localhost:3000/songs/${this.desserts[this.editedIndex].id}`
+          `http://localhost:3000/songs/${this.songs[this.editedIndex].id}`
         )
         .then(() => {
-          this.desserts.splice(this.editedIndex, 1);
+          this.songs.splice(this.editedIndex, 1);
           this.closeDelete();
         });
     },
@@ -294,8 +311,20 @@ export default {
     },
 
     save() {
+      console.log(this.editedIndex);
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem);
+        this.editedItem.image = "mic Test";
+
+        axios.put("http://localhost:3000/songs", this.editedItem).then(() => {
+          Object.assign(this.songs[this.editedIndex], this.editedItem);
+          // this.songs.push({
+          //   id: response.data.data,
+          //   name: this.editedItem.name,
+          //   artist: this.editedItem.artist,
+          //   duration: this.editedItem.duration,
+          // });
+          this.close();
+        });
       } else {
         // const formData = new FormData();
         // formData.append("file", this.selectedFile);
@@ -305,11 +334,12 @@ export default {
         axios
           .post("http://localhost:3000/songs", this.editedItem)
           .then((response) => {
-            this.desserts.push({
+            this.songs.push({
               id: response.data.data,
               name: this.editedItem.name,
               artist: this.editedItem.artist,
               duration: this.editedItem.duration,
+              album: this.editedItem.album,
             });
             this.close();
           });
