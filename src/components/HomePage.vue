@@ -2,7 +2,13 @@
   <main class="bg-[#e9e9e9] px-[12%] py-5 min-h-screen grid items-center">
     <div class="main-content">
       <div
-        class="left-nav-container rounded-l-3xl text-gray-500 col-span-1 bg-white"
+        class="
+          left-nav-container
+          rounded-l-3xl
+          text-gray-500
+          col-span-1
+          bg-white
+        "
       >
         <div class="p-6">
           <div class="flex justify-between items-center">
@@ -56,7 +62,7 @@
             </p>
             <ul data-v-50279bc2="">
               <li data-v-50279bc2="">
-                <a href="#" @click="favourite()" data-v-50279bc2=""
+                <a href="#" data-v-50279bc2=""
                   ><i class="far fa-heart" data-v-50279bc2=""></i>Favorite
                   Songs</a
                 >
@@ -75,7 +81,20 @@
           </nav>
         </div>
         <div
-          class="navbar-user flex justify-between items-center p-5 border-1 border-solid border-t-[#e9e9e9] border-b-transparent border-l-transparent border-r-transparent rounded-bl-3xl"
+          class="
+            navbar-user
+            flex
+            justify-between
+            items-center
+            p-5
+            border-1
+            border-solid
+            border-t-[#e9e9e9]
+            border-b-transparent
+            border-l-transparent
+            border-r-transparent
+            rounded-bl-3xl
+          "
           data-v-50279bc2=""
         >
           <a href="#" data-v-50279bc2=""
@@ -149,7 +168,13 @@
         </div>
       </div>
       <div
-        class="home_conntainer grid grid-cols-3 rounded-3xl col-span-3 bg-[#E7E8F3]"
+        class="
+          home_conntainer
+          grid grid-cols-3
+          rounded-3xl
+          col-span-3
+          bg-[#E7E8F3]
+        "
       >
         <div class="between-container col-span-2 bg-[#E7E8F3] py-5 pl-5 pr-2">
           <header
@@ -166,14 +191,32 @@
               data-v-cd2eed4a=""
             ></i>
             <div
-              class="main-content__search-form flex justify-around px-5 py-2.25 rounded-2xl bg-white w-full cursor-pointer gap-2"
+              class="
+                main-content__search-form
+                flex
+                justify-around
+                px-5
+                py-2.25
+                rounded-2xl
+                bg-white
+                w-full
+                cursor-pointer
+                gap-2
+              "
               data-v-cd2eed4a=""
             >
               <i class="fas fa-search search-btn" data-v-cd2eed4a=""></i
               ><input
                 type="text"
-                @change="searchSong"
-                class="search-input outline-none border-none bg-transparent w-full placeholder-gray-400"
+                @input="searchSong"
+                class="
+                  search-input
+                  outline-none
+                  border-none
+                  bg-transparent
+                  w-full
+                  placeholder-gray-400
+                "
                 placeholder="Search for artist, songs and..."
                 data-v-cd2eed4a=""
               />
@@ -214,24 +257,24 @@
           <div class="table_header">
             <v-tabs v-model="tab" align-with-title>
               <v-tabs-slider color="yellow"></v-tabs-slider>
-              <v-tab> Songs </v-tab>
-              <v-tab> Albums </v-tab>
+              <v-tab :key="0" :href="`#tab-0`"> Songs </v-tab>
+              <v-tab :key="1" :href="`#tab-1`"> Albums </v-tab>
             </v-tabs>
-            <span>Show all</span>
+            <span @click="getAllSongs">Show all</span>
           </div>
           <div class="overflow-y-scroll h-50 my-1">
             <v-tabs-items v-model="tab">
-              <v-tab-item :key="songs">
+              <v-tab-item :key="0" :id="`tab-0`">
                 <v-data-table
                   :headers="headers"
                   :search="search"
                   @click:row="changeSong"
-                  :items="songs"
+                  :items="songsList"
                   hide-default-footer
                   class="songsList"
                 ></v-data-table>
               </v-tab-item>
-              <v-tab-item :key="albums">
+              <v-tab-item :key="1" :id="`tab-1`">
                 <v-data-table
                   :headers="headersAlbum"
                   @click:row="getSongs"
@@ -248,14 +291,31 @@
               data-v-cd2eed4a=""
             >
               <div
-                class="play-control__act flex justify-start items-center text-gray-500 gap-2"
+                class="
+                  play-control__act
+                  flex
+                  justify-start
+                  items-center
+                  text-gray-500
+                  gap-2
+                "
                 data-v-cd2eed4a=""
               >
-                <div class="p-1 rounded-md" data-v-cd2eed4a="">
-                  <i class="far fa-heart" data-v-cd2eed4a=""></i
+                <div
+                  class="p-1 rounded-md"
+                  data-v-cd2eed4a=""
+                  @click="favourite()"
+                >
+                  <i
+                    class="far fa-heart"
+                    data-v-cd2eed4a=""
+                    id="favSong"
+                    style="display: block"
+                  ></i
                   ><i
                     class="fas fa-heart text-red-600"
                     data-v-cd2eed4a=""
+                    id="favSong2"
                     style="display: none"
                   ></i>
                 </div>
@@ -267,7 +327,13 @@
                 </div>
               </div>
               <div
-                class="play-control__main flex justify-center items-center gap-2"
+                class="
+                  play-control__main
+                  flex
+                  justify-center
+                  items-center
+                  gap-2
+                "
                 data-v-cd2eed4a=""
               >
                 <div
@@ -309,7 +375,13 @@
                 </div>
               </div>
               <div
-                class="play-control__volume flex justify-end items-center text-gray-500"
+                class="
+                  play-control__volume
+                  flex
+                  justify-end
+                  items-center
+                  text-gray-500
+                "
                 data-v-cd2eed4a=""
               >
                 <div data-v-cd2eed4a="">
@@ -337,7 +409,13 @@
               </div>
             </div>
             <div
-              class="play-seekbar flex justify-between items-center text-gray-500 text-sm"
+              class="
+                play-seekbar
+                flex
+                justify-between
+                items-center
+                text-gray-500 text-sm
+              "
               data-v-cd2eed4a=""
             >
               <div class="timer__left" data-v-cd2eed4a="">
@@ -360,7 +438,6 @@
                 />
               </div>
               <audio
-                src="http://sheelat.com/uploads/songs/shylt_6al_alfrak_916.mp3"
                 loop
                 id="audio"
                 muted
@@ -378,7 +455,7 @@
           data-v-060adb97=""
         >
           <div class="sidebar__shortcuts" data-v-060adb97="">
-            <p
+          <!--  <p
               class="sidebar__shortcuts-title font-bold pt-2"
               data-v-060adb97=""
             >
@@ -387,9 +464,12 @@
                 class="fas fa-stream js-hide-sidebar hidden"
                 data-v-060adb97=""
               ></i>
-            </p>
+            </p>-->
             <div class="sidebar__shortcuts-items" data-v-060adb97="">
-              <span class="sidebar__shortcuts-item bg-white" data-v-060adb97=""
+              <router-link class="manage-link" to="/manage">
+                Manage
+              </router-link>
+            <!--  <span class="sidebar__shortcuts-item bg-white" data-v-060adb97=""
                 >Chill
                 <img
                   src="../assets/snow.png"
@@ -419,14 +499,30 @@
                   src="../assets/ghitar.png"
                   alt="../assets/ghitar.png_icon"
                   data-v-060adb97=""
-              /></span>
+              /></span> -->
             </div>
           </div>
           <div class="sidebar__favorite" data-v-060adb97="">
-            <p class="sidebar__favorite-title" data-v-060adb97="">
-              Favorite Artists
-            </p>
-            <div
+            <!-- <p class="sidebar__favorite-title" data-v-060adb97=""></p> -->
+            <v-list flat>
+              <v-subheader>Favorite Artists</v-subheader>
+              <v-list-item-group v-model="selectedItem" color="primary">
+                <v-list-item v-for="item in favSongs" :key="item.id">
+                  <v-list-item-icon>
+                    <img
+                      src="../assets/tóc-tiên.jpg"
+                      alt=""
+                      class="w-8 h-8 rounded-full"
+                      data-v-060adb97=""
+                    />
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title v-text="item.name"></v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+            <!-- <div
               class="sidebar__favorite-list flex justify-between items-center p-1.5 text-sm"
               data-v-060adb97=""
             >
@@ -461,118 +557,10 @@
               >
                 <i class="fas fa-ellipsis-h" data-v-060adb97=""></i>
               </div>
-            </div>
-            <div
-              class="sidebar__favorite-list flex justify-between items-center p-1.5 text-sm"
-              data-v-060adb97=""
-            >
-              <div
-                class="artist-info__avt flex items-center"
-                data-v-060adb97=""
-              >
-                <img
-                  src="../assets/tóc-tiên.jpg"
-                  alt=""
-                  class="w-8 h-8 rounded-full"
-                  data-v-060adb97=""
-                />
-                <div class="artist-info ml-2" data-v-060adb97="">
-                  <h4
-                    class="artist-info__name font-semibold text-xs"
-                    data-v-060adb97=""
-                  >
-                    Tóc Tiên
-                  </h4>
-                  <p
-                    class="artist-info__song text-xs text-gray-500"
-                    data-v-060adb97=""
-                  >
-                    6 songs in library
-                  </p>
-                </div>
-              </div>
-              <div
-                class="text-gray-400 text-xs cursor-pointer"
-                data-v-060adb97=""
-              >
-                <i class="fas fa-ellipsis-h" data-v-060adb97=""></i>
-              </div>
-            </div>
-            <div
-              class="sidebar__favorite-list flex justify-between items-center p-1.5 text-sm"
-              data-v-060adb97=""
-            >
-              <div
-                class="artist-info__avt flex items-center"
-                data-v-060adb97=""
-              >
-                <img
-                  src="../assets/tóc-tiên.jpg"
-                  alt=""
-                  class="w-8 h-8 rounded-full"
-                  data-v-060adb97=""
-                />
-                <div class="artist-info ml-2" data-v-060adb97="">
-                  <h4
-                    class="artist-info__name font-semibold text-xs"
-                    data-v-060adb97=""
-                  >
-                    Tóc Tiên
-                  </h4>
-                  <p
-                    class="artist-info__song text-xs text-gray-500"
-                    data-v-060adb97=""
-                  >
-                    6 songs in library
-                  </p>
-                </div>
-              </div>
-              <div
-                class="text-gray-400 text-xs cursor-pointer"
-                data-v-060adb97=""
-              >
-                <i class="fas fa-ellipsis-h" data-v-060adb97=""></i>
-              </div>
-            </div>
-            <div
-              class="sidebar__favorite-list flex justify-between items-center p-1.5 text-sm"
-              data-v-060adb97=""
-            >
-              <div
-                class="artist-info__avt flex items-center"
-                data-v-060adb97=""
-              >
-                <img
-                  src="../assets/tóc-tiên.jpg"
-                  alt=""
-                  class="w-8 h-8 rounded-full"
-                  data-v-060adb97=""
-                />
-                <div class="artist-info ml-2" data-v-060adb97="">
-                  <h4
-                    class="artist-info__name font-semibold text-xs"
-                    data-v-060adb97=""
-                  >
-                    Tóc Tiên
-                  </h4>
-                  <p
-                    class="artist-info__song text-xs text-gray-500"
-                    data-v-060adb97=""
-                  >
-                    6 songs in library
-                  </p>
-                </div>
-              </div>
-              <div
-                class="text-gray-400 text-xs cursor-pointer"
-                data-v-060adb97=""
-              >
-                <i class="fas fa-ellipsis-h" data-v-060adb97=""></i>
-              </div>
-            </div>
+            </div> -->
           </div>
           <div class="sidebar__suggest-album cursor-pointer" data-v-060adb97="">
-            <div
+           <!-- <div
               class="suggest-album bg-white p-0.25 rounded-lg"
               data-v-060adb97=""
             >
@@ -593,7 +581,7 @@
                 </div>
                 <i class="far fa-plus-square" data-v-060adb97=""></i>
               </div>
-            </div>
+            </div>-->
           </div>
         </div>
       </div>
@@ -630,15 +618,17 @@ export default {
       { text: "ARTIST", align: "center", value: "artist" },
       { text: "TIME", align: "center", value: "duration" },
     ],
-    songs: [],
+    songsList: [],
     headersAlbum: [{ text: "ALBUM", align: "left", value: "album" }],
     albums: [],
+    favSongs: [],
     tab: null,
     items: ["Songs", "Albums"],
     search: "",
     show1: false,
     currentTime: "00:00",
     currentSong: 0,
+    fav: false,
     audio: undefined,
     duration: 0,
     currentSeconds: 0,
@@ -681,18 +671,65 @@ export default {
   },
   methods: {
     initialize() {
-      axios.get("http://localhost:3000/songs").then((response) => {
-        this.songs = response.data;
-      });
-      axios.get("http://localhost:3000/albums").then((response) => {
-        this.albums = response.data;
-      });
+      axios
+        .get(
+          "http://ec2-3-19-234-234.us-east-2.compute.amazonaws.com:3000/songs"
+        )
+        .then((response) => {
+          this.songsList = response.data;
+        });
+      axios
+        .get(
+          "http://ec2-3-19-234-234.us-east-2.compute.amazonaws.com:3000/albums"
+        )
+        .then((response) => {
+          this.albums = response.data;
+        });
+      axios
+        .get(
+          "http://ec2-3-19-234-234.us-east-2.compute.amazonaws.com:3000/songs/fav"
+        )
+        .then((response) => {
+          this.favSongs = response.data;
+        });
+    },
+    favourite() {
+      axios
+        .put(
+          "http://ec2-3-19-234-234.us-east-2.compute.amazonaws.com:3000/songs/fav",
+          {
+            id: this.currentSong,
+            fav: !this.fav,
+          }
+        )
+        .then(() => {
+          this.fav = !this.fav;
+          if (this.fav) {
+            document.getElementById("favSong").style.display = "none";
+            document.getElementById("favSong2").style.display = "block";
+          } else {
+            document.getElementById("favSong").style.display = "block";
+            document.getElementById("favSong2").style.display = "none";
+          }
+        });
     },
     getSongs(item) {
       axios
-        .get(`http://localhost:3000/albums/${item.album}`)
+        .get(
+          `http://ec2-3-19-234-234.us-east-2.compute.amazonaws.com:3000/albums/${item.album}`
+        )
         .then((response) => {
-          this.songs = response.data;
+          this.songsList = response.data;
+          this.tab = `tab-0`;
+        });
+    },
+    getAllSongs() {
+      axios
+        .get(
+          `http://ec2-3-19-234-234.us-east-2.compute.amazonaws.com:3000/songs`
+        )
+        .then((response) => {
+          this.songsList = response.data;
         });
     },
     searchSong(e) {
@@ -735,9 +772,15 @@ export default {
     changeSong(item) {
       this.currentSong = item.id;
       this.audio.src = item.url;
-      // this.audio.load();
+      this.fav = item.fav;
+      if (item.fav) {
+        document.getElementById("favSong").style.display = "none";
+        document.getElementById("favSong2").style.display = "block";
+      } else {
+        document.getElementById("favSong").style.display = "block";
+        document.getElementById("favSong2").style.display = "none";
+      }
       // this.toggleSound();
-      // this.audio.play();
       // this.audio.src = require("@/assets/" + item.file);
       // this.toggleSound();
       // this.playAgain();
@@ -749,7 +792,12 @@ export default {
         this.durationSecondsDisplay = this.convertTimeHHMMSS(
           this.durationSeconds
         );
-        return (this.playing = this.autoPlay);
+        // return (this.playing = this.autoPlay);
+        let pause = document.getElementById("fa-pause");
+        let play = document.getElementById("fa-play");
+        play.style.display = "none";
+        pause.style.display = "block";
+        this.audio.play();
       }
 
       throw new Error("Failed to load sound file.");

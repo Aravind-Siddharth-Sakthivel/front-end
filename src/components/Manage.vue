@@ -8,11 +8,11 @@
             data-v-cd2eed4a=""
           >
             <i class="fas fa-bars text-2xl px-2 hidden" data-v-cd2eed4a=""></i
-            ><i
-              class="fas fa-arrow-left px-2 cursor-pointer hover:text-black"
+            ><router-link class="manage-link" to="/"><i
+               class="fas fa-arrow-left px-2 cursor-pointer hover:text-black"
               data-v-cd2eed4a=""
-            ></i
-            ><i
+            ></i></router-link>
+            <i
               class="fas fa-arrow-right px-4 cursor-pointer hover:text-black"
               data-v-cd2eed4a=""
             ></i>
@@ -23,6 +23,7 @@
               <i class="fas fa-search search-btn" data-v-cd2eed4a=""></i
               ><input
                 type="text"
+                @input="searchSong"
                 class="search-input outline-none border-none bg-transparent w-full placeholder-gray-400"
                 placeholder="Search for artist, songs and..."
                 data-v-cd2eed4a=""
@@ -33,7 +34,8 @@
           <div class="overflow-y-scroll tableHeight my-1">
             <v-data-table
               :headers="headers"
-              :items="songs"
+              :items="songsList"
+              :search="search"
               hide-default-footer
               class="songsList"
               sort-by="calories"
@@ -214,7 +216,7 @@ export default {
       // { text: "URL", align: " d-none", value: "url" },
       { text: "Actions", align: "center", value: "actions", sortable: false },
     ],
-    songs: [],
+    songsList: [],
     editedIndex: -1,
     editedItem: {
       name: "",
@@ -223,6 +225,7 @@ export default {
       image: "",
       album: "",
       duration: "",
+      fav: 0,
     },
     defaultItem: {
       name: "",
@@ -231,12 +234,14 @@ export default {
       image: "",
       album: "",
       duration: "",
+      fav: 0,
     },
     dialog: false,
     dialogDelete: false,
     menu2: false,
     modal2: false,
     selectedFile: "",
+    search: "",
   }),
   computed: {
     formTitle() {
@@ -256,8 +261,8 @@ export default {
   },
   methods: {
     initialize() {
-      axios.get("http://localhost:3000/songs").then((response) => {
-        this.songs = response.data;
+      axios.get("http://ec2-3-19-234-234.us-east-2.compute.amazonaws.com:3000/songs").then((response) => {
+        this.songsList = response.data;
       });
     },
     onFileChange(e) {
@@ -265,19 +270,21 @@ export default {
       this.selectedFile = selectedFile;
     },
     ditItem(item) {
-      this.editedIndex = this.songs.indexOf(item);
+      this.editedIndex = this.songsList.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
-
+    searchSong(e) {
+      this.search = e.target.value;
+    },
     deleteItem(item) {
-      this.editedIndex = this.songs.indexOf(item);
+      this.editedIndex = this.songsList.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialogDelete = true;
     },
 
     editItem(item) {
-      this.editedIndex = this.songs.indexOf(item);
+      this.editedIndex = this.songsList.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
       // this.dialogDelete = true;
@@ -286,10 +293,10 @@ export default {
     deleteItemConfirm() {
       axios
         .delete(
-          `http://localhost:3000/songs/${this.songs[this.editedIndex].id}`
+          `http://ec2-3-19-234-234.us-east-2.compute.amazonaws.com:3000/songs/${this.songsList[this.editedIndex].id}`
         )
         .then(() => {
-          this.songs.splice(this.editedIndex, 1);
+          this.songsList.splice(this.editedIndex, 1);
           this.closeDelete();
         });
     },
@@ -311,18 +318,11 @@ export default {
     },
 
     save() {
-      console.log(this.editedIndex);
       if (this.editedIndex > -1) {
         this.editedItem.image = "mic Test";
 
-        axios.put("http://localhost:3000/songs", this.editedItem).then(() => {
-          Object.assign(this.songs[this.editedIndex], this.editedItem);
-          // this.songs.push({
-          //   id: response.data.data,
-          //   name: this.editedItem.name,
-          //   artist: this.editedItem.artist,
-          //   duration: this.editedItem.duration,
-          // });
+        axios.put("http://ec2-3-19-234-234.us-east-2.compute.amazonaws.com:3000/songs", this.editedItem).then(() => {
+          Object.assign(this.songsList[this.editedIndex], this.editedItem);
           this.close();
         });
       } else {
@@ -330,11 +330,12 @@ export default {
         // formData.append("file", this.selectedFile);
         // this.editedItem.image = this.selectedFile;
         this.editedItem.image = "mic Test";
+        // this.editedItem.fav = 0;
 
         axios
-          .post("http://localhost:3000/songs", this.editedItem)
+          .post("http://ec2-3-19-234-234.us-east-2.compute.amazonaws.com:3000/songs", this.editedItem)
           .then((response) => {
-            this.songs.push({
+            this.songsList.push({
               id: response.data.data,
               name: this.editedItem.name,
               artist: this.editedItem.artist,
