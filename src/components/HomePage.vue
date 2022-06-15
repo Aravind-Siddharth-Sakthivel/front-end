@@ -673,21 +673,21 @@ export default {
     initialize() {
       axios
         .get(
-          "http://ec2-3-19-234-234.us-east-2.compute.amazonaws.com:3000/songs"
+          "http://localhost:3000/songs"
         )
         .then((response) => {
           this.songsList = response.data;
         });
       axios
         .get(
-          "http://ec2-3-19-234-234.us-east-2.compute.amazonaws.com:3000/albums"
+          "http://localhost:3000/albums"
         )
         .then((response) => {
           this.albums = response.data;
         });
       axios
         .get(
-          "http://ec2-3-19-234-234.us-east-2.compute.amazonaws.com:3000/songs/fav"
+          "http://localhost:3000/songs/fav"
         )
         .then((response) => {
           this.favSongs = response.data;
@@ -696,7 +696,7 @@ export default {
     favourite() {
       axios
         .put(
-          "http://ec2-3-19-234-234.us-east-2.compute.amazonaws.com:3000/songs/fav",
+          "http://localhost:3000/songs/fav",
           {
             id: this.currentSong,
             fav: !this.fav,
@@ -716,7 +716,7 @@ export default {
     getSongs(item) {
       axios
         .get(
-          `http://ec2-3-19-234-234.us-east-2.compute.amazonaws.com:3000/albums/${item.album}`
+          `http://localhost:3000/albums/${item.album}`
         )
         .then((response) => {
           this.songsList = response.data;
@@ -726,7 +726,7 @@ export default {
     getAllSongs() {
       axios
         .get(
-          `http://ec2-3-19-234-234.us-east-2.compute.amazonaws.com:3000/songs`
+          `http://localhost:3000/songs`
         )
         .then((response) => {
           this.songsList = response.data;
